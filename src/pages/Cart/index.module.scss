@@ -1,0 +1,139 @@
+.cart {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.title {
+    text-align: center;
+}
+
+.product {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin-top: 15px;
+    border: 1px solid black;
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: scale(1.015);
+    }
+
+    &__section {
+        display: flex;
+        gap: 50px;
+        align-items: center;
+        text-decoration: none;
+    }
+
+    &__image {
+        width: 180px;
+        height: 220px;
+        border-radius: 15px;
+    }
+
+    &__group {
+        width: 60%;
+    }
+
+    &__cost {
+        width: 20%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__description {
+        font-size: 18px;
+    }
+
+    &__quantity {
+        font-weight: 700;
+        font-size: 20px;
+    }
+
+    &__title {
+        font-weight: 600;
+        font-size: 20px;
+    }
+
+    &__price {
+        font-size: 20px;
+        font-weight: 700;
+        padding: 10px;
+        width: fit-content;
+        border: 1px solid black;
+        white-space: nowrap;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    &__addDelete {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    &__icon {
+        width: 35px;
+        height: 35px;
+        cursor: pointer;
+    }
+
+    &__cross {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 35px;
+        height: 35px;
+        cursor: pointer;
+    }
+}
+
+.emptyCart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+    text-align: center;
+
+    &__img {
+        width: 150px;
+        margin-bottom: 20px;
+    }
+
+    &__title {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    &__text {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 20px;
+    }
+
+    &__button {
+        width: 200px;
+        padding: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        margin-top: 10px;
+        text-decoration: none;
+        color: white;
+        background: black;
+        border: 1px solid black;
+        cursor: pointer;
+        transition: background 0.3s ease;
+
+        &:hover {
+            background: white;
+            color: black;
+        }
+    }
+}

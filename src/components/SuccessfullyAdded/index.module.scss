@@ -1,0 +1,36 @@
+.add {
+    position: fixed;
+    top: 10vh;
+    right: 30px;
+    padding: 10px 30px;
+    opacity: 0;
+    animation: fade-in-out 2s ease-in-out;
+    background: rgb(0, 0, 0);
+    z-index: 10;
+    text-align: center;
+
+    &__title {
+        font-size: 20px;
+        color: white;
+    }
+
+    &__text {
+        font-size: 18px;
+        color: rgb(174, 174, 174);
+    }
+}
+
+@keyframes fade-in-out {
+    0% {
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}

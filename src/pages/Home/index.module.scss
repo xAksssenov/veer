@@ -1,0 +1,67 @@
+.sales,
+.popular {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+
+    &__button {
+        border: 1px solid black;
+        transition: all 0.3s ease;
+
+        &:hover {
+            background-color: white;
+            color: black;
+        }
+    }
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    justify-content: center;
+    max-width: 900px;
+    margin: 20px auto;
+}
+
+.cardWrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.brandPhilosophy {
+    text-align: center;
+    padding: 40px 20px;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    margin: 60px auto 0;
+    max-width: 800px;
+    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
+
+    &__title {
+        font-size: 26px;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+
+    &__text {
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 20px;
+        color: #555;
+    }
+
+    &__slogan {
+        font-size: 18px;
+        font-weight: 500;
+        color: #222;
+        border-left: 4px solid #e63946;
+        padding-left: 10px;
+        display: inline-block;
+        margin-top: 10px;
+    }
+}

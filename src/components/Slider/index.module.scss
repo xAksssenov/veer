@@ -1,0 +1,44 @@
+.sliderWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.arrowLeft,
+.arrowRight {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #333;
+    position: absolute;
+    z-index: 10;
+    padding: 0;
+}
+
+.arrowLeft {
+    left: 0;
+    cursor: pointer;
+}
+
+.arrowRight {
+    right: 0;
+    cursor: pointer;
+}
+
+.sliderContainer {
+    width: 80%;
+    overflow: hidden;
+}
+
+.slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image {
+    height: 600px;
+    object-fit: cover;
+}
