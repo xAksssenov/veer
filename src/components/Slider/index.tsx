@@ -6,9 +6,10 @@ import styles from "./index.module.scss";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const images = [
-  "/assets/img/slider_1.png",
-  "/assets/img/slider_2.png",
-  "/assets/img/slider_3.png",
+  "/assets/img/slider_1.jpg",
+  "/assets/img/slider_2.jpg",
+  "/assets/img/slider_3.jpg",
+  "/assets/img/slider_4.jpg",
 ];
 
 const ImageSlider = () => {
@@ -52,6 +53,7 @@ const ImageSlider = () => {
       >
         <FaChevronRight />
       </button>
+      <h1 className={styles.overlayText}>VEER&RZA</h1>
     </div>
   );
 };
