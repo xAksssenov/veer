@@ -57,17 +57,17 @@
         gap: 10px;
 
         &__item {
-            align-items: flex-start;
+            align-items: center;
             gap: 10px;
         }
 
         &__title {
-            font-size: 12px;
+            font-size: 14px;
         }
 
         &__arrow {
-            width: 14px;
-            height: 14px;
+            width: 18px;
+            height: 18px;
         }
     }
 }

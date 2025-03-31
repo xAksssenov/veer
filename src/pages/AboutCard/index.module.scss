@@ -52,7 +52,7 @@
             max-width: 300px;
             padding-right: 10px;
             scrollbar-width: thin;
-            scrollbar-color: #888 #ddd; 
+            scrollbar-color: #888 #ddd;
         }
 
         .thumbnail {
@@ -108,6 +108,25 @@
 
         @media (max-width: 768px) {
             font-size: 20px;
+        }
+    }
+
+    .buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        &__cart {
+            width: 100%;
+            transition: all ease 0.3s;
+            color: white;
+            border: 1px solid black;
+
+            &:hover {
+                background-color: white;
+                color: black;
+            }
         }
     }
 
