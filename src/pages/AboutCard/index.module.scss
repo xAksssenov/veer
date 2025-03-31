@@ -1,21 +1,59 @@
 .product {
     display: flex;
     justify-content: space-between;
+    gap: 20px;
+
+    @media (max-width: 1024px) {
+        flex-direction: row;
+        align-items: flex-start;
+    }
 
     @media (max-width: 768px) {
-        flex-direction: column;
-        align-items: center;
+        gap: 15px;
     }
 }
 
 .gallery {
     display: flex;
-    gap: 40px;
+    gap: 15px;
+
+    @media (max-width: 768px) {
+        align-items: center;
+    }
+
+    &__img {
+        width: 700px;
+        height: 700px;
+        object-fit: cover;
+        cursor: pointer;
+
+        @media (max-width: 1024px) {
+            width: 450px;
+            height: 450px;
+        }
+
+        @media (max-width: 768px) {
+            width: 100%;
+            height: auto;
+        }
+    }
 
     &__thumbnails {
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 10px;
+
+        @media (max-width: 768px) {
+            gap: 10px;
+            flex-direction: row;
+            overflow-x: scroll;
+            justify-content: flex-start;
+            overflow-x: auto;
+            max-width: 300px;
+            padding-right: 10px;
+            scrollbar-width: thin;
+            scrollbar-color: #888 #ddd; 
+        }
 
         .thumbnail {
             width: 100px;
@@ -33,33 +71,33 @@
             &:hover {
                 border-color: rgb(0, 0, 0);
             }
-        }
-    }
 
-    &__img {
-        width: 700px;
-        height: 700px;
-        object-fit: cover;
-        cursor: pointer;
+            @media (max-width: 768px) {
+                width: 70px;
+                height: 100px;
+            }
+        }
     }
 }
 
 .details {
-    width: 30%;
+    width: 35%;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 20px;
 
-    &__section {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
+    @media (max-width: 1024px) {
+        width: 90%;
     }
 
     &__title {
         font-size: 24px;
         font-weight: 500;
         line-height: 1.2;
+
+        @media (max-width: 768px) {
+            font-size: 20px;
+        }
     }
 
     &__price {
@@ -67,68 +105,9 @@
         font-weight: bold;
         line-height: 1.2;
         margin: 15px 0 0 0;
-    }
 
-    &__description {
-        font-size: 18px;
-        line-height: 1.4;
-    }
-
-    .buttons {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        gap: 20px;
-
-        &__cart {
-            width: 100%;
-            transition: all ease 0.3s;
-            border: 1px solid black;
-
-            &:hover {
-                background-color: white;
-                color: black;
-            }
-        }
-
-        &__icon {
-            width: 35px;
-            height: 35px;
-            cursor: pointer;
-            transition: all ease 0.3s;
-
-            &:hover {
-                scale: 1.2;
-            }
-        }
-    }
-
-    .size {
-        display: flex;
-        flex-direction: column;
-
-        &__section {
-            display: flex;
-            gap: 15px;
-        }
-
-        &__title {
-            line-height: 0%;
-            font-weight: 500;
-        }
-
-        &__text {
-            text-align: center;
-            padding: 10px 15px;
-            border: 1px solid black;
-            cursor: pointer;
-            transition: all ease 0.3s;
-
-            &:hover {
-                background-color: black;
-                color: white;
-            }
+        @media (max-width: 768px) {
+            font-size: 20px;
         }
     }
 
@@ -146,12 +125,34 @@
             padding: 10px 0;
             text-align: left;
             width: 100%;
+            position: relative;
             transition: all ease 0.3s;
 
             &:hover {
                 color: black;
                 transform: translateY(-2px);
                 font-weight: 700;
+            }
+
+            .arrow {
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                transform: translateY(-50%) rotate(45deg);
+                width: 8px;
+                height: 8px;
+                border: solid #333;
+                border-width: 0 2px 2px 0;
+                display: inline-block;
+                transition: transform 0.3s ease;
+            }
+
+            &.open .arrow {
+                transform: translateY(-50%) rotate(-135deg);
+            }
+
+            @media (max-width: 768px) {
+                font-size: 16px;
             }
         }
 
@@ -160,6 +161,10 @@
             font-size: 16px;
             color: #555;
             animation: fadeIn 0.3s ease-in-out;
+
+            @media (max-width: 768px) {
+                font-size: 14px;
+            }
 
             li {
                 padding-left: 15px;
@@ -185,32 +190,26 @@
     }
 }
 
-.additional__title {
-    position: relative;
-    padding-right: 20px;
-
-    .arrow {
-        position: absolute;
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%) rotate(45deg);
-        width: 8px;
-        height: 8px;
-        border: solid #333;
-        border-width: 0 2px 2px 0;
-        display: inline-block;
-        transition: transform 0.3s ease;
+@media (max-width: 768px) {
+    .product {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
     }
 
-    &.open .arrow {
-        transform: translateY(-50%) rotate(-135deg);
-    }
-}
+    .gallery {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
 
-.loading {
-    text-align: center;
-    font-size: 18px;
-    color: #666;
+        &__thumbnails {
+            justify-content: center;
+        }
+    }
+
+    .details {
+        width: 100%;
+    }
 }
 
 .fullscreen {

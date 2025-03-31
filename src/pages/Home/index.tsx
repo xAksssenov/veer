@@ -25,7 +25,7 @@ const Home = () => {
         </blockquote>
       </section>
 
-      <section className={styles.sales}>
+      <section className={styles.products}>
         <div className={styles.cards}>
           {cardsItems.map((item) => (
             <div key={item.id} className={styles.cardWrapper}>

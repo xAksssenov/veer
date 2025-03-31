@@ -18,6 +18,33 @@
         font-size: 18px;
         color: rgb(174, 174, 174);
     }
+
+    @media (max-width: 1024px) {
+        right: 20px;
+        padding: 10px 20px;
+        top: 8vh;
+    }
+
+    @media (max-width: 768px) {
+        right: 10px;
+        padding: 8px 15px;
+        top: 6vh;
+        font-size: 14px;
+
+        &__title {
+            font-size: 16px;
+        }
+
+        &__text {
+            font-size: 14px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        right: 10px;
+        padding: 8px 12px;
+        top: 5vh;
+    }
 }
 
 @keyframes fade-in-out {

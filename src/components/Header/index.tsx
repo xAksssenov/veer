@@ -19,6 +19,9 @@ const Header = () => {
         </Link>
 
         <div className={styles.header__nav}>
+          <Link to="/gallery" className={styles.header__button}>
+            Галерея
+          </Link>
           <Link to="/cart">
             <ReactSVG src={cartIcon} className={styles.icon} />
           </Link>
@@ -35,17 +38,11 @@ const Header = () => {
         <div className={styles.popup} onClick={togglePopup}>
           <div className={styles.popup__content}>
             <nav className={styles.popup__nav}>
-              <Link to="/" className={styles.header__button}>
-                Женщинам
+              <Link to="/gallery" className={styles.header__button}>
+                Галерея
               </Link>
-              <Link to="/" className={styles.header__button}>
-                Мужчинам
-              </Link>
-              <Link to="/new" className={styles.header__button}>
-                Новинки
-              </Link>
-              <Link to="/about" className={styles.header__button}>
-                О нас
+              <Link to="/cart" className={styles.header__button}>
+                Корзина
               </Link>
             </nav>
           </div>

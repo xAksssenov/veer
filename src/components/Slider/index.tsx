@@ -10,6 +10,8 @@ const images = [
   "/assets/img/slider_2.jpg",
   "/assets/img/slider_3.jpg",
   "/assets/img/slider_4.jpg",
+  "/assets/img/slider_5.jpg",
+  "/assets/img/slider_6.jpg",
 ];
 
 const ImageSlider = () => {
@@ -24,6 +26,20 @@ const ImageSlider = () => {
     autoplay: true,
     autoplaySpeed: 2000,
     arrows: false,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
   };
 
   return (
