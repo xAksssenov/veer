@@ -77,6 +77,7 @@ const AboutCard = () => {
                     selectedImage === img ? styles.thumbnail__active : ""
                   }`}
                   onClick={() => handleImageSelect(img)}
+                  loading="lazy"
                 />
               ))}
             </div>
@@ -85,6 +86,7 @@ const AboutCard = () => {
               src={selectedImage || card.image[0]}
               alt={card.title}
               onClick={toggleFullscreen}
+              loading="lazy"
             />
           </div>
 

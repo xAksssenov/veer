@@ -1,14 +1,14 @@
 import styles from "./index.module.scss";
 
 const images = [
-  "/assets/img/gal_1.jpg",
-  "/assets/img/gal_2.jpg",
-  "/assets/img/gal_3.jpg",
-  "/assets/img/gal_4.jpg",
-  "/assets/img/gal_5.jpg",
-  "/assets/img/gal_6.jpg",
-  "/assets/img/gal_7.jpg",
-  "/assets/img/gal_8.jpg",
+  "/assets/img/gal_1.webp",
+  "/assets/img/gal_2.webp",
+  "/assets/img/gal_3.webp",
+  "/assets/img/gal_4.webp",
+  "/assets/img/gal_5.webp",
+  "/assets/img/gal_6.webp",
+  "/assets/img/gal_7.webp",
+  "/assets/img/gal_8.webp",
 ];
 
 const Gallery = () => {
@@ -20,6 +20,7 @@ const Gallery = () => {
             src={image}
             alt={`Gallery Image ${index + 1}`}
             className={styles.image}
+            loading="lazy"
           />
         </div>
       ))}

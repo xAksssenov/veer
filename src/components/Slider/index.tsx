@@ -6,12 +6,12 @@ import styles from "./index.module.scss";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const images = [
-  "/assets/img/slider_1.jpg",
-  "/assets/img/slider_2.jpg",
-  "/assets/img/slider_3.jpg",
-  "/assets/img/slider_4.jpg",
-  "/assets/img/slider_5.jpg",
-  "/assets/img/slider_6.jpg",
+  "/assets/img/slider_1.webp",
+  "/assets/img/slider_2.webp",
+  "/assets/img/slider_3.webp",
+  "/assets/img/slider_4.webp",
+  "/assets/img/slider_5.webp",
+  "/assets/img/slider_6.webp",
 ];
 
 const ImageSlider = () => {
@@ -58,6 +58,7 @@ const ImageSlider = () => {
                 src={src}
                 alt={`Slide ${index + 1}`}
                 className={styles.image}
+                loading="lazy"
               />
             </div>
           ))}

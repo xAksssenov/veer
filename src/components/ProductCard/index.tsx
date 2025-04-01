@@ -27,6 +27,7 @@ const ProductCard = (props: Card) => {
             className={styles.link__img}
             src={props.image[0]}
             alt={`photo_${props.id}`}
+            loading="lazy"
           />
           <p className={styles.link__title}>{props.title}</p>
           <p className={styles.link__price}>{props.price} ₽</p>
