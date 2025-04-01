@@ -28,15 +28,12 @@
     "image": [
       "/assets/img/psycho_1.jpg",
       "/assets/img/psycho_2.jpg",
-      "/assets/img/psycho_3.jpg",
-      "/assets/img/psycho_4.jpg",
-      "/assets/img/psycho_5.jpg",
-      "/assets/img/psycho_6.jpg"
+      "/assets/img/psycho_3.jpg"
     ]
   },
   {
     "id": 4,
-    "title": "PsychoCro2s",
+    "title": "PsychoCro2s - обновленный",
     "price": 3490,
     "description": "Кулон в виде креста из коллекции PsychoCro2s, выполненный в серебряном исполнении. Этот аксессуар представляет собой идеальное сочетание изысканности и духовности, добавляя нотку роскоши и символической силы в образ. Он подойдет для тех, кто ценит уникальные украшения, которые подчеркивают статус и индивидуальность.",
     "gender": "unisex",

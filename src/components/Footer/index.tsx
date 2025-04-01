@@ -11,7 +11,7 @@ const Footer = () => {
         <div className={styles.socialLinks}>
           <div className={styles.socialItem}>
             <a
-              href="https://t.me/mveerstore"
+              href="https://t.me/veerrza"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Telegram"
