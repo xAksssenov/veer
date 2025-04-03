@@ -214,6 +214,29 @@
         font-size: 14px;
         padding: 10px;
     }
+
+    .checkoutContainer {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .orderButton {
+        width: 100%;
+        padding: 12px;
+    }
+
+    .agreement {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+    }
+
+    .agreement input {
+        width: 20px;
+        height: 20px;
+    }
 }
 
 .checkoutContainer {
