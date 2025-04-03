@@ -215,3 +215,39 @@
         padding: 10px;
     }
 }
+
+.checkoutContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding: 15px;
+    border-top: 1px solid #ccc;
+}
+
+.agreement {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.orderButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: black;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid black;
+}
+
+.orderButton:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+}
+
+.orderButton:hover:not(:disabled) {
+    background-color: white;
+    color: black;
+}

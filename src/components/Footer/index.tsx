@@ -8,6 +8,18 @@ const Footer = () => {
     <footer className={styles.footer}>
       <div className={styles.footerBottom}>
         <span>© 2025 VEER&RZA</span>
+        <div className={styles.sellersInfo}>
+          <p>Верещагин Михаил Васильевич - ИНН: 301611373729</p>
+          <p>Рзазаде Магаммед Вугар оглы - ИНН: 301515975576</p>
+          <a
+            href="https://t.me/mveerm"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.sellersInfo__link}
+          >
+            У вас возникли вопросы?
+          </a>
+        </div>
         <div className={styles.socialLinks}>
           <div className={styles.socialItem}>
             <a

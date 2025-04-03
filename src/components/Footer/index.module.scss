@@ -11,6 +11,19 @@
         color: #666;
     }
 
+    .sellersInfo {
+        font-size: 14px;
+        color: #666;
+    }
+
+    .sellersInfo a {
+        transition: all 0.3s ease;
+
+        &:hover {
+            transform: translateY(-2px);
+        }
+    }
+
     .socialLinks {
         margin-top: 15px;
         display: flex;
