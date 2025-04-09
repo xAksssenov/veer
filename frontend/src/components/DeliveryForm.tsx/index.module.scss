@@ -1,0 +1,231 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.deliveryForm {
+    background-color: white;
+    padding: 30px;
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+}
+
+.closeButton {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.formTitle {
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.formGroup {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.cross {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    cursor: pointer;
+}
+
+.formInput {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid black;
+    color: black;
+    background-color: white;
+    font-size: 16px;
+    box-sizing: border-box;
+
+    &:focus {
+        outline: none;
+        border-color: black;
+    }
+}
+
+.orderSummary {
+    margin: 25px 0;
+    padding: 15px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+}
+
+.summaryTitle {
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.orderItem {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.orderTotal {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+    font-size: 18px;
+}
+
+.agreement {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.checkbox {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.termsLink {
+    color: black;
+    text-decoration: underline;
+
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.checkoutContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #ccc;
+}
+
+.orderButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: black;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid black;
+
+    &:disabled {
+        background-color: gray;
+        cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled) {
+        background-color: white;
+        color: black;
+    }
+}
+
+@media (max-width: 768px) {
+    .modalOverlay {
+        padding: 15px;
+        align-items: flex-start;
+        overflow-y: auto;
+    }
+
+    .deliveryForm {
+        width: 100%;
+        max-width: none;
+        padding: 20px 15px;
+        margin-top: 50px;
+        margin-bottom: 20px;
+    }
+
+    .formTitle {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    .formInput {
+        padding: 12px 10px;
+        font-size: 15px;
+    }
+
+    .orderSummary {
+        padding: 10px;
+        margin: 15px 0;
+    }
+
+    .summaryTitle {
+        font-size: 16px;
+    }
+
+    .orderItem {
+        flex-direction: column;
+        margin-bottom: 5px;
+    }
+
+    .orderTotal {
+        flex-direction: column;
+        gap: 5px;
+        font-size: 16px;
+    }
+
+    .agreement {
+        flex-wrap: wrap;
+        font-size: 14px;
+        margin: 15px 0;
+    }
+
+    .checkoutContainer {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .orderButton {
+        width: 100%;
+        padding: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .deliveryForm {
+        padding: 15px 10px;
+    }
+
+    .formTitle {
+        font-size: 18px;
+    }
+
+    .formInput {
+        padding: 10px 8px;
+        font-size: 14px;
+    }
+
+    .orderItem {
+        font-size: 14px;
+    }
+
+    .orderTotal {
+        font-size: 15px;
+    }
+}

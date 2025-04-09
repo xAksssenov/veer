@@ -13,8 +13,13 @@ interface CartState {
   cart: CartItem[];
 }
 
+const loadCartFromLocalStorage = (): CartItem[] => {
+  const savedCart = localStorage.getItem("cart");
+  return savedCart ? JSON.parse(savedCart) : [];
+};
+
 const initialState: CartState = {
-  cart: [],
+  cart: loadCartFromLocalStorage(),
 };
 
 const cartSlice = createSlice({
@@ -32,25 +37,38 @@ const cartSlice = createSlice({
       } else {
         state.cart.push({ id, quantity: 1, card });
       }
+
+      localStorage.setItem("cart", JSON.stringify(state.cart));
     },
 
     removeItemFromCart: (state, action: PayloadAction<number>) => {
       state.cart = state.cart.filter((item) => item.id !== action.payload);
+      localStorage.setItem("cart", JSON.stringify(state.cart));
     },
 
-    updateItemQuantity: (state, action: PayloadAction<{ id: number; quantity: number }>) => {
+    updateItemQuantity: (
+      state,
+      action: PayloadAction<{ id: number; quantity: number }>
+    ) => {
       const item = state.cart.find((item) => item.id === action.payload.id);
       if (item) {
         item.quantity = Math.max(1, action.payload.quantity);
       }
+      localStorage.setItem("cart", JSON.stringify(state.cart));
     },
 
     clearCart: (state) => {
       state.cart = [];
+      localStorage.setItem("cart", JSON.stringify([]));
     },
   },
 });
 
-export const { addItemToCart, removeItemFromCart, updateItemQuantity, clearCart } = cartSlice.actions;
+export const {
+  addItemToCart,
+  removeItemFromCart,
+  updateItemQuantity,
+  clearCart,
+} = cartSlice.actions;
 export const selectCart = (state: RootState) => state.cart.cart;
 export default cartSlice.reducer;
