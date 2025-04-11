@@ -31,6 +31,9 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = True
 ALLOWED_HOSTS = ['*', '0.0.0.0', '127.0.0.1', 'localhost', '176.119.158.166']
 
+
+
+CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = [
     "https://veerrzastore.ru",
     "https://www.veerrzastore.ru",
@@ -39,6 +42,10 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000"
 ]
 
+CORS_ALLOW_CREDENTIALS = True
+CORS_EXPOSE_HEADERS = ['Content-Disposition']
+
+# Для preflight запросов
 CORS_ALLOW_METHODS = [
     'DELETE',
     'GET',
@@ -60,8 +67,10 @@ CORS_ALLOW_HEADERS = [
     'x-requested-with',
 ]
 
-CORS_ALLOW_CREDENTIALS = True
+# Важно для CSRF
+CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS.copy()
 CORS_EXPOSE_HEADERS = ['Content-Disposition']
+CORS_ALLOW_CREDENTIALS = True
 
 SECURE_CROSS_ORIGIN_OPENER_POLICY = None
 

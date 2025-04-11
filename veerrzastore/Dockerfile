@@ -6,6 +6,7 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /app
 
 RUN apk update && apk add --no-cache \
+  curl \
   gcc \
   musl-dev \
   libffi-dev \
