@@ -144,7 +144,60 @@
     }
 }
 
+.selectWrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.selectWrapper::after {
+    content: "▼";
+    font-size: 12px;
+    color: black;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.selectInput {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid black;
+    color: black;
+    background-color: white;
+    font-size: 16px;
+    box-sizing: border-box;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    padding-right: 30px;
+
+    &:focus {
+        outline: none;
+        border-color: black;
+    }
+}
+
+.selectInput option {
+    padding: 10px;
+    background-color: white;
+    color: black;
+}
+
 @media (max-width: 768px) {
+    .selectInput {
+        padding: 12px 10px;
+        font-size: 15px;
+        padding-right: 30px;
+    }
+
+    .selectWrapper::after {
+        right: 10px;
+    }
+
     .modalOverlay {
         padding: 15px;
         align-items: flex-start;
@@ -208,6 +261,17 @@
 }
 
 @media (max-width: 480px) {
+    .selectInput {
+        padding: 10px 8px;
+        font-size: 14px;
+        padding-right: 25px;
+    }
+
+    .selectWrapper::after {
+        font-size: 10px;
+        right: 8px;
+    }
+
     .deliveryForm {
         padding: 15px 10px;
     }

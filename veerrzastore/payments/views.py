@@ -12,7 +12,8 @@ class CreatePaymentView(APIView):
         amount = request.data.get("amount")
         customer = request.data.get("customer", {})
         items = request.data.get("items", [])
-        
+        delivery_method = request.data.get("delivery_method", "")
+
         if not amount or not customer or not items:
             return Response(
                 {"error": "Missing required parameters"}, 
@@ -36,6 +37,18 @@ class CreatePaymentView(APIView):
                 "payment_subject": "commodity"
             })
 
+        customer_name = customer.get('name', '')[:30]
+        delivery_name = {
+            'CDEK': 'СДЭК',
+            'YANDEX': 'Яндекс Доставка',
+            'BOXBERY': 'Boxberry'
+        }.get(delivery_method, 'СДЭК')
+        address = customer.get('address', '')[:50]
+
+        payment_description = (
+            f"{customer_name}, {delivery_name}, {address}"
+        )[:128]
+
         payload = {
             "amount": {
                 "value": f"{amount_value:.2f}",
@@ -46,7 +59,7 @@ class CreatePaymentView(APIView):
                 "type": "redirect",
                 "return_url": "http://localhost:5173/"
             },
-            "description": f"Order {order_id}",
+            "description": payment_description,
             "receipt": {
                 "customer": {
                     "email": customer.get("email", ""),
@@ -58,9 +71,10 @@ class CreatePaymentView(APIView):
             "metadata": {
                 "customer_name": customer.get("name", ""),
                 "customer_address": customer.get("address", ""),
-                "order_id": order_id
+                "order_id": order_id,
+                "delivery_method": delivery_method
             },
-            "test": True
+            "test": False
         }
 
         try:
@@ -80,7 +94,9 @@ class CreatePaymentView(APIView):
                     status=data["status"],
                     customer_email=customer.get("email", ""),
                     customer_phone=customer.get("phone", ""),
-                    customer_name=customer.get("name", "")
+                    customer_name=customer.get("name", ""),
+                    delivery_method=delivery_method,
+                    delivery_address=customer.get("address", "")
                 )
                 return Response({
                     "confirmation_url": data["confirmation"]["confirmation_url"],

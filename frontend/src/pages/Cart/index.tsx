@@ -44,10 +44,11 @@ const Cart = () => {
     email: string;
     phone: string;
     address: string;
+    deliveryMethod: string;
   }) => {
     try {
       const response = await axios.post(
-        "https://2695614a6fd2a94d992a5ae0988f669b.serveo.net/api/payments/create-payment/",
+        "https://f554a1969feca8e9e09d56c022e51f13.serveo.net/api/payments/create-payment/",
         {
           amount: totalAmount,
           customer: {
@@ -62,6 +63,7 @@ const Cart = () => {
             quantity: item.quantity,
             price: item.card.price,
           })),
+          delivery_method: formData.deliveryMethod,
         }
       );
 

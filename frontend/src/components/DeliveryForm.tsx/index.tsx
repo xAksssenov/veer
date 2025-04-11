@@ -23,6 +23,7 @@ interface DeliveryFormProps {
     email: string;
     phone: string;
     address: string;
+    deliveryMethod: string;
   }) => void;
   onClose: () => void;
 }
@@ -38,6 +39,7 @@ const DeliveryForm: React.FC<DeliveryFormProps> = ({
     email: "",
     phone: "",
     address: "",
+    deliveryMethod: "CDEK",
   });
   const [isChecked, setIsChecked] = useState(false);
 
@@ -50,6 +52,15 @@ const DeliveryForm: React.FC<DeliveryFormProps> = ({
     onConfirm(formData);
   };
 
+  const deliveryOptions = [
+    { value: "CDEK", label: "СДЭК" },
+    {
+      value: "YANDEX",
+      label: "Яндекс Доставка",
+    },
+    { value: "BOXBERY", label: "Boxberry" },
+  ];
+
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.deliveryForm}>
@@ -60,7 +71,7 @@ const DeliveryForm: React.FC<DeliveryFormProps> = ({
           <div className={styles.formGroup}>
             <input
               type="text"
-              placeholder="Ваше имя"
+              placeholder="Ваше ФИО"
               value={formData.name}
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
@@ -99,9 +110,26 @@ const DeliveryForm: React.FC<DeliveryFormProps> = ({
           </div>
 
           <div className={styles.formGroup}>
+            <select
+              value={formData.deliveryMethod}
+              onChange={(e) =>
+                setFormData({ ...formData, deliveryMethod: e.target.value })
+              }
+              className={styles.formInput}
+              required
+            >
+              {deliveryOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className={styles.formGroup}>
             <input
               type="text"
-              placeholder="Адрес доставки"
+              placeholder="Адрес ближайшего пункта выдачи"
               value={formData.address}
               onChange={(e) =>
                 setFormData({ ...formData, address: e.target.value })
@@ -116,7 +144,7 @@ const DeliveryForm: React.FC<DeliveryFormProps> = ({
             {cart.map((item) => (
               <div key={item.id} className={styles.orderItem}>
                 <span className={styles.itemName}>
-                  {item.card.title} × {item.quantity}
+                  {item.card.title} х {item.quantity}
                 </span>
                 <span className={styles.itemPrice}>
                   {item.card.price * item.quantity} ₽
