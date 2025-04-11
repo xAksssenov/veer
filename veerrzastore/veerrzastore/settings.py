@@ -26,11 +26,12 @@ load_dotenv()
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-default-key-for-dev-only')
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
-
+SECURE_SSL_REDIRECT = os.getenv('ENVIRONMENT') == 'production'
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
 SECURE_SSL_REDIRECT = True
-ALLOWED_HOSTS = ['*', '0.0.0.0', '127.0.0.1', 'localhost', '176.119.158.166']
-
+ALLOWED_HOSTS = ['*', '0.0.0.0', '127.0.0.1', 'localhost', '176.119.158.166', 'backend', 'api.veerrzastore.ru',]
 
 
 CORS_ALLOW_ALL_ORIGINS = False
