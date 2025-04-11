@@ -48,7 +48,7 @@ const Cart = () => {
   }) => {
     try {
       const response = await axios.post(
-        "https://f554a1969feca8e9e09d56c022e51f13.serveo.net/api/payments/create-payment/",
+        "https://f101b33b8433b4e2094d18d078346308.serveo.net/api/payments/create-payment/",
         {
           amount: totalAmount,
           customer: {

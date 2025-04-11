@@ -9,19 +9,15 @@ RUN apk update && apk add --no-cache \
   gcc \
   musl-dev \
   libffi-dev \
-  postgresql-dev  # Добавлено для PostgreSQL
+  postgresql-dev \
+  netcat-openbsd  # Добавлено для проверки соединения с БД
 
 COPY requirements.txt .
 RUN pip install --upgrade pip && \
-  pip install -r requirements.txt
+  pip install -r requirements.txt gunicorn  # Добавлен Gunicorn
 
 COPY . .
 
-CMD ["sh", "-c", "\
-  echo 'Waiting for PostgreSQL...' && \
-  while ! nc -z db 5432; do sleep 1; done && \
-  echo 'Applying migrations...' && \
-  python manage.py migrate && \
-  echo 'Starting server...' && \
-  python manage.py runserver 0.0.0.0:8000\
-  "]
+RUN mkdir -p /app/staticfiles
+
+EXPOSE 8000
