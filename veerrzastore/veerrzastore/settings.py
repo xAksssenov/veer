@@ -42,8 +42,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000"
 ]
 
-CORS_ALLOW_CREDENTIALS = True
-CORS_EXPOSE_HEADERS = ['Content-Disposition']
 
 # Для preflight запросов
 CORS_ALLOW_METHODS = [
@@ -68,11 +66,8 @@ CORS_ALLOW_HEADERS = [
 ]
 
 # Важно для CSRF
-CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS.copy()
-CORS_EXPOSE_HEADERS = ['Content-Disposition']
 CORS_ALLOW_CREDENTIALS = True
-
-SECURE_CROSS_ORIGIN_OPENER_POLICY = None
+CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS.copy()
 
 # Application definition
 

@@ -5,9 +5,21 @@ import requests
 from django.conf import settings
 import uuid
 from .models import Payment
+from rest_framework.permissions import AllowAny
 
 
 class CreatePaymentView(APIView):
+    permission_classes = [AllowAny]
+    
+    def options(self, request, *args, **kwargs):
+        response = Response()
+        response['Access-Control-Allow-Origin'] = 'https://veerrzastore.ru'
+        response['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+        response['Access-Control-Allow-Headers'] = 'Content-Type'
+        response['Access-Control-Allow-Credentials'] = 'true'
+        response['Access-Control-Max-Age'] = '86400'
+        return response
+
     def post(self, request):
         amount = request.data.get("amount")
         customer = request.data.get("customer", {})
@@ -15,10 +27,13 @@ class CreatePaymentView(APIView):
         delivery_method = request.data.get("delivery_method", "")
 
         if not amount or not customer or not items:
-            return Response(
+            response = Response(
                 {"error": "Missing required parameters"}, 
                 status=status.HTTP_400_BAD_REQUEST
             )
+            response['Access-Control-Allow-Origin'] = 'https://veerrzastore.ru'
+            response['Access-Control-Allow-Credentials'] = 'true'
+            return response
 
         order_id = str(uuid.uuid4())
         amount_value = float(amount)
@@ -98,15 +113,24 @@ class CreatePaymentView(APIView):
                     delivery_method=delivery_method,
                     delivery_address=customer.get("address", "")
                 )
-                return Response({
+                response = Response({
                     "confirmation_url": data["confirmation"]["confirmation_url"],
                     "payment_id": data["id"]
                 })
+                response['Access-Control-Allow-Origin'] = 'https://veerrzastore.ru'
+                response['Access-Control-Allow-Credentials'] = 'true'
+                return response
             
-            return Response(data, status=status.HTTP_400_BAD_REQUEST)
+            response = Response(data, status=status.HTTP_400_BAD_REQUEST)
+            response['Access-Control-Allow-Origin'] = 'https://veerrzastore.ru'
+            response['Access-Control-Allow-Credentials'] = 'true'
+            return response
             
         except Exception as e:
-            return Response(
+            response = Response(
                 {"error": str(e)}, 
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+            response['Access-Control-Allow-Origin'] = 'https://veerrzastore.ru'
+            response['Access-Control-Allow-Credentials'] = 'true'
+            return response
