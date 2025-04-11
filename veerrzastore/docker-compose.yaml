@@ -15,10 +15,11 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - app_network
+      - veerrza-network
 
   backend:
     build: .
+    hostname: backend
     volumes:
       - ./staticfiles:/app/staticfiles
     environment:
@@ -29,7 +30,7 @@ services:
         condition: service_healthy
     restart: unless-stopped
     networks:
-      - app_network
+      - veerrza-network
     command: >
       sh -c "
       python manage.py migrate &&
@@ -38,6 +39,7 @@ services:
 
   nginx:
     image: nginx:latest
+    hostname: nginx
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./staticfiles:/app/staticfiles
@@ -48,12 +50,14 @@ services:
     depends_on:
       - backend
     networks:
-      - app_network
+      - veerrza-network
+    dns_search: .
 
 volumes:
   postgres_data:
 
 networks:
-  app_network:
+  veerrza-network:
     driver: bridge
     name: veerrza-network
+    attachable: true
