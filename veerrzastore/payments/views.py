@@ -57,7 +57,7 @@ class CreatePaymentView(APIView):
             "capture": True,
             "confirmation": {
                 "type": "redirect",
-                "return_url": "http://localhost:5173/"
+                "return_url": "https://veerrzastore.ru"
             },
             "description": payment_description,
             "receipt": {
