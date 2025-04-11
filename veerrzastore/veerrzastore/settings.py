@@ -34,6 +34,9 @@ ALLOWED_HOSTS = ['*', '0.0.0.0', '127.0.0.1', 'localhost', '176.119.158.166', 'b
 
 
 CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOWED_ORIGINS = [
+    "https://veerrzastore.ru",
+]
 
 
 # Для preflight запросов
