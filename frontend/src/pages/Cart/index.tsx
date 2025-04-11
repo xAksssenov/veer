@@ -39,6 +39,13 @@ const Cart = () => {
     0
   );
 
+  const getCSRFToken = () => {
+    return document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("csrftoken="))
+      ?.split("=")[1];
+  };
+
   const handleOrderConfirm = async (formData: {
     name: string;
     email: string;
@@ -69,7 +76,7 @@ const Cart = () => {
           withCredentials: true,
           headers: {
             "Content-Type": "application/json",
-            Accept: "application/json",
+            "X-CSRFToken": getCSRFToken(),
           },
         }
       );
