@@ -5,24 +5,9 @@ import requests
 from django.conf import settings
 import uuid
 from .models import Payment
-from rest_framework.permissions import AllowAny
 
 
 class CreatePaymentView(APIView):
-    permission_classes = [AllowAny]
-
-    def options(self, request, *args, **kwargs):
-        """
-        Обработка preflight OPTIONS запросов для CORS
-        """
-        response = Response()
-        response['Access-Control-Allow-Origin'] = 'https://veerrzastore.ru'
-        response['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
-        response['Access-Control-Allow-Headers'] = 'Content-Type, X-CSRFToken'
-        response['Access-Control-Allow-Credentials'] = 'true'
-        response['Access-Control-Max-Age'] = 86400
-        return response
-
     def post(self, request):
         amount = request.data.get("amount")
         customer = request.data.get("customer", {})
