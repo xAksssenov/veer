@@ -28,29 +28,21 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-default-key-for-dev
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 SECURE_SSL_REDIRECT = os.getenv('ENVIRONMENT') == 'production'
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SESSION_COOKIE_SECURE = False
-CSRF_COOKIE_SECURE = False
-ALLOWED_HOSTS = ['*', '0.0.0.0', '127.0.0.1', 'localhost', '176.119.158.166', 'backend', 'api.veerrzastore.ru',]
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+ALLOWED_HOSTS = ['*', '0.0.0.0', '127.0.0.1', 'localhost', '176.119.158.166', 'backend', 'api.veerrzastore.ru', 'veerrzastore.ru']
 
 
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = [
     "https://veerrzastore.ru",
-    "https://www.veerrzastore.ru",
-    "https://veer-rza.netlify.app",
-    "http://localhost:5173",
-    "http://localhost:8000"
 ]
 
 
 # Для preflight запросов
 CORS_ALLOW_METHODS = [
-    'DELETE',
-    'GET',
-    'OPTIONS',
-    'PATCH',
     'POST',
-    'PUT',
+    'OPTIONS',
 ]
 
 CORS_ALLOW_HEADERS = [
