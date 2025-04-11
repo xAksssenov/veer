@@ -35,7 +35,8 @@ CORS_ALLOWED_ORIGINS = [
     "https://veerrzastore.ru",
     "https://www.veerrzastore.ru",
     "https://veer-rza.netlify.app",
-    "http://localhost:5173"
+    "http://localhost:5173",
+    "http://localhost:8000"
 ]
 
 CORS_ALLOW_METHODS = [
@@ -61,6 +62,8 @@ CORS_ALLOW_HEADERS = [
 
 CORS_ALLOW_CREDENTIALS = True
 CORS_EXPOSE_HEADERS = ['Content-Disposition']
+
+SECURE_CROSS_ORIGIN_OPENER_POLICY = None
 
 # Application definition
 

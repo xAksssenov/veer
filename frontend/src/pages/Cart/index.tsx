@@ -64,6 +64,13 @@ const Cart = () => {
             price: item.card.price,
           })),
           delivery_method: formData.deliveryMethod,
+        },
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
         }
       );
 
