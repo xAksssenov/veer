@@ -27,7 +27,9 @@ load_dotenv()
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-default-key-for-dev-only')
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['*', '0.0.0.0', '127.0.0.1', 'localhost']
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+ALLOWED_HOSTS = ['*', '0.0.0.0', '127.0.0.1', 'localhost', '176.119.158.166']
 
 CORS_ALLOWED_ORIGINS = [
     "https://veerrzastore.ru",
