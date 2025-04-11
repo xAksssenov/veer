@@ -30,7 +30,6 @@ SECURE_SSL_REDIRECT = os.getenv('ENVIRONMENT') == 'production'
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SECURE = False
-SECURE_SSL_REDIRECT = True
 ALLOWED_HOSTS = ['*', '0.0.0.0', '127.0.0.1', 'localhost', '176.119.158.166', 'backend', 'api.veerrzastore.ru',]
 
 
