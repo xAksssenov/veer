@@ -52,6 +52,7 @@
     &__quantity {
         font-weight: 700;
         font-size: 20px;
+        margin: 0;
     }
 
     &__title {
@@ -68,6 +69,7 @@
         white-space: nowrap;
         display: inline-flex;
         align-items: center;
+        margin: 15px 0;
     }
 
     &__addDelete {
