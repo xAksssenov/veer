@@ -31,6 +31,6 @@
 ## Доступ
 - **Frontend**: http://localhost:3000
 
--**API**: http://localhost:8000/api/
+- **API**: http://localhost:8000/api/
 
--**Admin**: http://localhost:8000/admin
+- **Admin**: http://localhost:8000/admin
