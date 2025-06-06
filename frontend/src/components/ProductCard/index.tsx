@@ -30,7 +30,7 @@ const ProductCard = (props: Card) => {
             loading="lazy"
           />
           <p className={styles.link__title}>{props.title}</p>
-          <p className={styles.link__price}>{props.price} ₽</p>
+          <p className={styles.link__price}>{`${props.price} ₽`}</p>
         </Link>
         <button className={styles.link__button} onClick={handleAddToCart}>
           Добавить в корзину

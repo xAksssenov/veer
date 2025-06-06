@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import cartIcon from "../../assets/svg/cart.svg";
+import logoIcon from "/assets/img/logo_1.png";
 import { ReactSVG } from "react-svg";
 import styles from "./index.module.scss";
 import { useState } from "react";
@@ -14,8 +15,8 @@ const Header = () => {
   return (
     <div className={styles.header}>
       <div className={styles.header__container}>
-        <Link to="/" className={styles.header__title}>
-          VEER&RZA
+        <Link to="/" className={styles.header__logo}>
+          <img src={logoIcon} className={styles.header__icon} />
         </Link>
 
         <div className={styles.header__nav}>
