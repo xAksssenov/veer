@@ -167,7 +167,17 @@
     .header {
         height: 50px;
 
+        &__log {
+            width: 150px;
+            height: 40px;
+        }
+
         &__icon {
+            height: auto;
+        }
+
+        &__icon svg {
+            width: 150px;
             height: 40px;
         }
 
