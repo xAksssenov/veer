@@ -7,7 +7,7 @@
     text-decoration: none;
     transition: all ease 0.3s;
     padding: 15px;
-    width: 550px;
+    width: 400px;
 
     &:hover {
         scale: 1.02;
@@ -22,8 +22,9 @@
         transition: all ease 0.3s;
 
         &__img {
-            height: 630px;
-            width: 550px;
+            height: 400px;
+            width: 400px;
+            object-fit: cover;
         }
 
         &__price {
@@ -47,6 +48,10 @@
             font-size: 24px;
             font-weight: 600;
             margin: 15px 0 0 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 390px;
         }
 
         &__button {
@@ -70,6 +75,28 @@
     }
 }
 
+.grid-items {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* по умолчанию: 2 в ряд (телефон) */
+    gap: 20px;
+}
+
+/* Планшеты — от 768px до 1400px */
+@media (min-width: 1368px) and (max-width: 1774px) {
+    .grid-items {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* ПК и большие экраны — от 1400px и выше */
+@media (min-width: 1774px) {
+    .grid-items {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+
+
 @media (max-width: 1024px) {
     .cards {
         display: flex;
@@ -79,7 +106,7 @@
     }
 
     .card {
-        width: 90%;
+        width: 100%;
         height: 100%;
         max-width: 450px;
         justify-content: start;
@@ -89,10 +116,13 @@
                 height: auto;
                 max-width: 100%;
                 object-fit: contain;
+                max-width: 300px;
+                max-height: 300px;
             }
 
             &__title {
                 font-size: 20px;
+                max-width: 300px;
             }
 
             &__price {
@@ -109,26 +139,28 @@
 
 @media (max-width: 700px) {
     .cards {
-        display: flex;
-        flex-direction: column;
         align-items: center;
-        gap: 15px;
+        gap: 10px;
     }
 
     .card {
-        width: 95%;
-        max-width: 350px;
-        padding: 10px;
+        width: 100%;
+        max-width: 150px;
+        height: auto;
+        padding: 5px;
 
         .link {
             &__img {
                 width: 100%;
                 height: auto;
+                max-height: 150px;
+                max-width: 150px;
             }
 
             &__title {
-                font-size: 16px;
+                font-size: 14px;
                 text-align: center;
+                max-width: 140px;
             }
 
             &__price {
@@ -137,7 +169,7 @@
             }
 
             &__button {
-                font-size: 14px;
+                font-size: 11px;
                 padding: 8px;
             }
         }

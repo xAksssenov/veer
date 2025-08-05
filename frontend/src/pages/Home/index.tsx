@@ -1,6 +1,5 @@
 import styles from "./index.module.scss";
-import ProductCard from "../../components/ProductCard";
-import cardsItems from "../../data/cards.json";
+import ProductList from "../../components/ProductCard/ProductList";
 import ImageSlider from "../../components/Slider";
 
 const Home = () => {
@@ -27,11 +26,7 @@ const Home = () => {
 
       <section className={styles.products}>
         <div className={styles.cards}>
-          {cardsItems.map((item) => (
-            <div key={item.id} className={styles.cardWrapper}>
-              <ProductCard {...item} />
-            </div>
-          ))}
+          <ProductList />
         </div>
       </section>
     </div>
