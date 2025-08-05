@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import BreadCrumbs from "../../components/BreadCrumbs";
 import { Link } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import { useState as useStateReact } from "react";
 import styles from "./index.module.scss";
 import { ReactSVG } from "react-svg";
 import addSvg from "../../assets/svg/add.svg";
@@ -31,7 +30,7 @@ const API_BASE = "http://81.177.136.42:8000";
 const Cart = () => {
   const cart = useSelector(selectCart);
   const dispatch = useDispatch();
-  const [showForm, setShowForm] = useStateReact(false);
+  const [showForm, setShowForm] = useState(false);
 
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
@@ -42,14 +41,12 @@ const Cart = () => {
     { id: 2, title: "Корзина", link: "#" },
   ];
 
-  // Подгружаем данные товаров по id из корзины
   useEffect(() => {
     const fetchProducts = async () => {
       if (cart.length === 0) {
         setProducts([]);
         return;
       }
-
       setLoading(true);
       setError(null);
 
@@ -59,7 +56,7 @@ const Cart = () => {
           params: { ids: idsQuery },
         });
         setProducts(response.data);
-      } catch (err) {
+      } catch {
         setError("Ошибка при загрузке товаров из корзины");
       } finally {
         setLoading(false);
@@ -69,7 +66,6 @@ const Cart = () => {
     fetchProducts();
   }, [cart]);
 
-  // Связываем элементы корзины с данными товаров
   const cartWithProductData = cart
     .map((item) => ({
       ...item,
@@ -114,9 +110,7 @@ const Cart = () => {
         },
         {
           withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
         }
       );
 
@@ -130,8 +124,7 @@ const Cart = () => {
     }
   };
 
-  if (loading) return <p>Загрузка корзины...</p>;
-  if (error) return <p>{error}</p>;
+  const SKELETON_COUNT = 3;
 
   return (
     <div>
@@ -139,13 +132,32 @@ const Cart = () => {
 
       <h2 className={styles.title}>Корзина</h2>
 
-      {cart.length ? (
+      {loading ? (
+        <>
+          {[...Array(SKELETON_COUNT)].map((_, index) => (
+            <div
+              key={index}
+              className={styles.product}
+              style={{ display: "flex", alignItems: "center", marginBottom: 20 }}
+            >
+              <div className={`${styles.skeleton} ${styles.skeletonImage}`}></div>
+              <div style={{ flex: 1 }}>
+                <div className={`${styles.skeleton} ${styles.skeletonText}`}></div>
+                <div
+                  className={`${styles.skeleton} ${styles.skeletonText} ${styles.skeletonTextShort}`}
+                ></div>
+                <div className={`${styles.skeleton} ${styles.skeletonPrice}`}></div>
+              </div>
+            </div>
+          ))}
+        </>
+      ) : error ? (
+        <p>{error}</p>
+      ) : cart.length ? (
         <>
           {cartWithProductData.map((item) => {
-            if (!item.card) return null; // пока нет данных о товаре
-            console.log('item.card.images:', item.card.images); // Что реально приходит?
+            if (!item.card) return null;
 
-            // Защита от undefined и пустого массива image
             const imageUrl =
               Array.isArray(item.card.images) && item.card.images.length > 0
                 ? item.card.images[0]
