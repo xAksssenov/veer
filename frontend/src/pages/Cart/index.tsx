@@ -8,6 +8,7 @@ import { ReactSVG } from "react-svg";
 import addSvg from "../../assets/svg/add.svg";
 import deleteSvg from "../../assets/svg/delete.svg";
 import cross from "../../assets/svg/cross.svg";
+import emptyCartImg from "../../assets/svg/cart.svg";
 import {
   selectCart,
   removeItemFromCart,
@@ -22,7 +23,7 @@ interface Product {
   title: string;
   price: number;
   description: string;
-  image: string[];
+  images: string[];
 }
 
 const API_BASE = "http://81.177.136.42:8000";
@@ -142,11 +143,12 @@ const Cart = () => {
         <>
           {cartWithProductData.map((item) => {
             if (!item.card) return null; // пока нет данных о товаре
+            console.log('item.card.images:', item.card.images); // Что реально приходит?
 
             // Защита от undefined и пустого массива image
             const imageUrl =
-              Array.isArray(item.card.image) && item.card.image.length > 0
-                ? item.card.image[0]
+              Array.isArray(item.card.images) && item.card.images.length > 0
+                ? item.card.images[0]
                 : "";
 
             return (
@@ -219,11 +221,11 @@ const Cart = () => {
         </>
       ) : (
         <div className={styles.emptyCart}>
-          {/* <img
+          <img
             src={emptyCartImg}
             alt="Корзина пуста"
             className={styles.emptyCart__img}
-          /> */}
+          />
           <h3 className={styles.emptyCart__title}>Ваша корзина пуста</h3>
           <p className={styles.emptyCart__text}>
             Добавьте товары, чтобы увидеть их здесь.
