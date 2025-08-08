@@ -8,7 +8,7 @@ const ProductList = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("http://81.177.136.42:8000/items/")
+        fetch("https://veerutility.ru/items/")
             .then((res) => res.json())
             .then((data) => {
                 const processed = data.map((item: any) => ({
@@ -17,7 +17,7 @@ const ProductList = () => {
                     price: item.price,
                     description: item.description,
                     gender: item.gender,
-                    image: [item.images[0]], // ❗️только первая картинка
+                    image: [item.images[0]],
                 }));
                 setItems(processed);
             })

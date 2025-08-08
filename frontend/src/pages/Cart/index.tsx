@@ -25,7 +25,7 @@ interface Product {
   images: string[];
 }
 
-const API_BASE = "http://81.177.136.42:8000";
+const API_BASE = "https://veerutility.ru/";
 
 const Cart = () => {
   const cart = useSelector(selectCart);
