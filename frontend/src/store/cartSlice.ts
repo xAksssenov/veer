@@ -1,12 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
-import data from "../data/cards.json";
-import { Card } from "../Types/cardType";
 
 export interface CartItem {
   id: number;
   quantity: number;
-  card: Card;
 }
 
 interface CartState {
@@ -28,16 +25,12 @@ const cartSlice = createSlice({
   reducers: {
     addItemToCart: (state, action: PayloadAction<{ id: number }>) => {
       const { id } = action.payload;
-      const card = data.find((item) => item.id === id);
-      if (!card) return;
-
       const existingItem = state.cart.find((item) => item.id === id);
       if (existingItem) {
         existingItem.quantity += 1;
       } else {
-        state.cart.push({ id, quantity: 1, card });
+        state.cart.push({ id, quantity: 1 });
       }
-
       localStorage.setItem("cart", JSON.stringify(state.cart));
     },
 
@@ -70,5 +63,7 @@ export const {
   updateItemQuantity,
   clearCart,
 } = cartSlice.actions;
+
 export const selectCart = (state: RootState) => state.cart.cart;
+
 export default cartSlice.reducer;

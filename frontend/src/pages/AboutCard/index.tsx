@@ -3,34 +3,51 @@ import styles from "./index.module.scss";
 import { useParams } from "react-router";
 import BreadCrumbs from "../../components/BreadCrumbs";
 import SuccessfullyAdded from "../../components/SuccessfullyAdded";
-import CardHook from "../../hooks/card";
 import { useDispatch } from "react-redux";
 import { addItemToCart } from "../../store/cartSlice";
+import axios from "axios";
+
+const API_BASE = "http://81.177.136.42:8000";
+
+interface CardType {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  images: string[];
+  image?: string[]; // для совместимости с фронтом
+}
 
 const AboutCard = () => {
   const { id } = useParams<{ id: string }>();
+  const [card, setCard] = useState<CardType | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string>("");
+  const [openSection, setOpenSection] = useState<string[]>([]);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isAddedCart, setIsAddedCart] = useState(false);
-
-  const {
-    setOpenSection,
-    setSelectedImage,
-    card,
-    selectedImage,
-    openSection,
-    isVisible,
-    fetchCard,
-  } = CardHook();
+  const [isVisible, setIsVisible] = useState(false);
 
   const dispatch = useDispatch();
 
-  const toggleFullscreen = () => {
-    setIsFullscreen(!isFullscreen);
+  const fetchCard = async (id: string) => {
+    try {
+      const response = await axios.get(`${API_BASE}/items/item/${id}`);
+      const data = response.data;
+      const cardWithImage = { ...data, image: data.images }; // адаптируем для фронта
+      setCard(cardWithImage);
+      setSelectedImage(data.images[0]);
+    } catch (error) {
+      console.error("Ошибка при загрузке карточки:", error);
+    }
   };
 
   useEffect(() => {
     if (id) fetchCard(id);
   }, [id]);
+
+  const toggleFullscreen = () => {
+    setIsFullscreen(!isFullscreen);
+  };
 
   const toggleSection = (section: string) => {
     setOpenSection((prev) =>
@@ -45,14 +62,16 @@ const AboutCard = () => {
 
     dispatch(addItemToCart({ id: card.id }));
     setIsAddedCart(true);
+    setIsVisible(true);
 
     setTimeout(() => {
       setIsAddedCart(false);
+      setIsVisible(false);
     }, 3000);
   };
 
-  const handleImageSelect = (item: string) => {
-    setSelectedImage(item);
+  const handleImageSelect = (img: string) => {
+    setSelectedImage(img);
   };
 
   const breadCrumbs = [
@@ -68,7 +87,7 @@ const AboutCard = () => {
         <div className={styles.product}>
           <div className={styles.gallery}>
             <div className={styles.gallery__thumbnails}>
-              {card.image.map((img, index) => (
+              {card.image?.map((img, index) => (
                 <img
                   key={index}
                   src={img}
@@ -83,7 +102,7 @@ const AboutCard = () => {
             </div>
             <img
               className={styles.gallery__img}
-              src={selectedImage || card.image[0]}
+              src={selectedImage || card.image?.[0]}
               alt={card.title}
               onClick={toggleFullscreen}
               loading="eager"
@@ -130,14 +149,7 @@ const AboutCard = () => {
                       )}
                       {section === "delivery" && (
                         <p>
-                          Доставка заказов осуществляется преимущественно
-                          службой СДЭК, также возможна отправка через
-                          Яндекс.Доставку. Отправка товаров производится по
-                          понедельникам и четвергам. Исключение составляют
-                          лимитированные коллекции и предзаказы, условия
-                          доставки которых указываются отдельно для каждой
-                          позиции. Сроки доставки: в среднем 4-5 дней (Москва –
-                          1 день, для близлежащих регионов – быстрее).
+                          Доставка заказов осуществляется преимущественно службой СДЭК, также возможна отправка через Яндекс.Доставку. Отправка товаров производится по понедельникам и четвергам. Исключение составляют лимитированные коллекции и предзаказы, условия доставки которых указываются отдельно для каждой позиции. Сроки доставки: в среднем 4–5 дней (Москва – 1 день, для близлежащих регионов – быстрее).
                         </p>
                       )}
                     </div>
@@ -146,6 +158,7 @@ const AboutCard = () => {
               ))}
             </div>
           </div>
+
           {isVisible && (
             <SuccessfullyAdded itemName={card.title} cart={isAddedCart} />
           )}
@@ -154,15 +167,11 @@ const AboutCard = () => {
         <h3 className={styles.loading}>Загрузка страницы...</h3>
       )}
 
-      {card && isAddedCart && (
-        <SuccessfullyAdded itemName={card.title} cart={isAddedCart} />
-      )}
-
       {isFullscreen && (
         <div className={styles.fullscreen} onClick={toggleFullscreen}>
           <img
             className={styles.fullscreen__img}
-            src={selectedImage || card?.image[0]}
+            src={selectedImage || card?.image?.[0]}
             alt={card?.title}
           />
         </div>

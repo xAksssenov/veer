@@ -10,7 +10,7 @@ interface CartItem {
   card: {
     title: string;
     price: number;
-    image: string[];
+    images: string[];
     description: string;
   };
 }

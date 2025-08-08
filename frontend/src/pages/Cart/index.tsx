@@ -1,7 +1,7 @@
+import React, { useEffect, useState } from "react";
 import BreadCrumbs from "../../components/BreadCrumbs";
 import { Link } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
 import styles from "./index.module.scss";
 import { ReactSVG } from "react-svg";
 import addSvg from "../../assets/svg/add.svg";
@@ -16,28 +16,71 @@ import {
 } from "../../store/cartSlice";
 import axios from "axios";
 import DeliveryForm from "../../components/DeliveryForm.tsx";
+
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  images: string[];
+}
+
+const API_BASE = "http://81.177.136.42:8000";
+
 const Cart = () => {
   const cart = useSelector(selectCart);
   const dispatch = useDispatch();
   const [showForm, setShowForm] = useState(false);
 
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
   const breadCrumbs = [
-    {
-      id: 1,
-      title: "Главная",
-      link: "/",
-    },
-    {
-      id: 2,
-      title: "Корзина",
-      link: "#",
-    },
+    { id: 1, title: "Главная", link: "/" },
+    { id: 2, title: "Корзина", link: "#" },
   ];
 
-  const totalAmount = cart.reduce(
-    (sum, item) => sum + item.card.price * item.quantity,
-    0
-  );
+  useEffect(() => {
+    const fetchProducts = async () => {
+      if (cart.length === 0) {
+        setProducts([]);
+        return;
+      }
+      setLoading(true);
+      setError(null);
+
+      try {
+        const idsQuery = cart.map((item) => item.id).join(",");
+        const response = await axios.get<Product[]>(`${API_BASE}/items`, {
+          params: { ids: idsQuery },
+        });
+        setProducts(response.data);
+      } catch {
+        setError("Ошибка при загрузке товаров из корзины");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, [cart]);
+
+  const cartWithProductData = cart
+    .map((item) => ({
+      ...item,
+      card: products.find((p) => p.id === item.id),
+    }))
+    .filter((item) => item.card !== undefined) as {
+    id: number;
+    quantity: number;
+    card: Product;
+  }[];
+
+  const totalAmount = cartWithProductData.reduce((sum, item) => {
+    if (!item.card) return sum;
+    return sum + item.card.price * item.quantity;
+  }, 0);
 
   const handleOrderConfirm = async (formData: {
     name: string;
@@ -57,19 +100,17 @@ const Cart = () => {
             phone: formData.phone,
             address: formData.address,
           },
-          items: cart.map((item) => ({
+          items: cartWithProductData.map((item) => ({
             id: item.id,
-            title: item.card.title,
+            title: item.card?.title,
             quantity: item.quantity,
-            price: item.card.price,
+            price: item.card?.price,
           })),
           delivery_method: formData.deliveryMethod,
         },
         {
           withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
         }
       );
 
@@ -83,71 +124,104 @@ const Cart = () => {
     }
   };
 
+  const SKELETON_COUNT = 3;
+
   return (
     <div>
       <BreadCrumbs items={breadCrumbs} />
 
       <h2 className={styles.title}>Корзина</h2>
 
-      {cart.length ? (
+      {loading ? (
         <>
-          {cart.map((item) => (
-            <div key={item.id} className={styles.product}>
-              <Link to={`/card/${item.id}`} className={styles.product__section}>
-                <img
-                  className={styles.product__image}
-                  src={item.card.image[0]}
-                  alt={item.card.title}
-                />
-                <div className={styles.product__group}>
-                  <p className={styles.product__title}>{item.card.title}</p>
-                  <p className={styles.product__description}>
-                    {item.card.description}
-                  </p>
-                </div>
-              </Link>
-
-              <div className={styles.product__cost}>
-                <p className={styles.product__price}>
-                  {item.card.price * item.quantity} ₽
-                </p>
-
-                <div className={styles.product__addDelete}>
-                  <ReactSVG
-                    onClick={() =>
-                      dispatch(
-                        updateItemQuantity({
-                          id: item.id,
-                          quantity: item.quantity - 1,
-                        })
-                      )
-                    }
-                    src={deleteSvg}
-                    className={styles.product__icon}
-                  />
-                  <p className={styles.product__quantity}>{item.quantity}</p>
-                  <ReactSVG
-                    onClick={() =>
-                      dispatch(
-                        updateItemQuantity({
-                          id: item.id,
-                          quantity: item.quantity + 1,
-                        })
-                      )
-                    }
-                    src={addSvg}
-                    className={styles.product__icon}
-                  />
-                </div>
+          {[...Array(SKELETON_COUNT)].map((_, index) => (
+            <div
+              key={index}
+              className={styles.product}
+              style={{ display: "flex", alignItems: "center", marginBottom: 20 }}
+            >
+              <div className={`${styles.skeleton} ${styles.skeletonImage}`}></div>
+              <div style={{ flex: 1 }}>
+                <div className={`${styles.skeleton} ${styles.skeletonText}`}></div>
+                <div
+                  className={`${styles.skeleton} ${styles.skeletonText} ${styles.skeletonTextShort}`}
+                ></div>
+                <div className={`${styles.skeleton} ${styles.skeletonPrice}`}></div>
               </div>
-
-              <ReactSVG
-                onClick={() => dispatch(removeItemFromCart(item.id))}
-                src={cross}
-                className={styles.product__cross}
-              />
             </div>
           ))}
+        </>
+      ) : error ? (
+        <p>{error}</p>
+      ) : cart.length ? (
+        <>
+          {cartWithProductData.map((item) => {
+            if (!item.card) return null;
+
+            const imageUrl =
+              Array.isArray(item.card.images) && item.card.images.length > 0
+                ? item.card.images[0]
+                : "";
+
+            return (
+              <div key={item.id} className={styles.product}>
+                <Link to={`/card/${item.id}`} className={styles.product__section}>
+                  <img
+                    className={styles.product__image}
+                    src={imageUrl}
+                    alt={item.card.title || "Товар"}
+                  />
+                  <div className={styles.product__group}>
+                    <p className={styles.product__title}>{item.card.title}</p>
+                    <p className={styles.product__description}>
+                      {item.card.description}
+                    </p>
+                  </div>
+                </Link>
+
+                <div className={styles.product__cost}>
+                  <p className={styles.product__price}>
+                    {item.card.price * item.quantity} ₽
+                  </p>
+
+                  <div className={styles.product__addDelete}>
+                    <ReactSVG
+                      onClick={() =>
+                        dispatch(
+                          updateItemQuantity({
+                            id: item.id,
+                            quantity: item.quantity - 1,
+                          })
+                        )
+                      }
+                      src={deleteSvg}
+                      className={styles.product__icon}
+                    />
+                    <p className={styles.product__quantity}>{item.quantity}</p>
+                    <ReactSVG
+                      onClick={() =>
+                        dispatch(
+                          updateItemQuantity({
+                            id: item.id,
+                            quantity: item.quantity + 1,
+                          })
+                        )
+                      }
+                      src={addSvg}
+                      className={styles.product__icon}
+                    />
+                  </div>
+                </div>
+
+                <ReactSVG
+                  onClick={() => dispatch(removeItemFromCart(item.id))}
+                  src={cross}
+                  className={styles.product__cross}
+                />
+              </div>
+            );
+          })}
+
           <div className={styles.checkoutContainer}>
             <button
               className={styles.orderButton}
@@ -174,10 +248,10 @@ const Cart = () => {
         </div>
       )}
 
-      {showForm && (
+      {showForm && cartWithProductData.length > 0 && (
         <DeliveryForm
           totalAmount={totalAmount}
-          cart={cart}
+          cart={cartWithProductData}
           onConfirm={handleOrderConfirm}
           onClose={() => setShowForm(false)}
         />
