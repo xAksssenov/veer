@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import BreadCrumbs from "../../components/BreadCrumbs";
 import { Link } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
