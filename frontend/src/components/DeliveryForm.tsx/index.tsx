@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./index.module.scss";
 import { ReactSVG } from "react-svg";
@@ -24,6 +24,7 @@ interface DeliveryFormProps {
     phone: string;
     address: string;
     deliveryMethod: string;
+    promocode?: string;
   }) => void;
   onClose: () => void;
 }
@@ -40,8 +41,61 @@ const DeliveryForm: React.FC<DeliveryFormProps> = ({
     phone: "",
     address: "",
     deliveryMethod: "CDEK",
+    promocode: "",
   });
   const [isChecked, setIsChecked] = useState(false);
+  const [promoValid, setPromoValid] = useState<boolean | null>(null);
+  const [discount, setDiscount] = useState(0);
+  const [checkingPromo, setCheckingPromo] = useState(false);
+
+  // Опции доставки
+  const deliveryOptions = [
+    { value: "CDEK", label: "СДЭК" },
+    { value: "YANDEX", label: "Яндекс Доставка" },
+    { value: "BOXBERY", label: "Boxberry" },
+  ];
+
+  // Дебаунс-проверка промокода
+  useEffect(() => {
+    if (!formData.promocode.trim()) {
+      setPromoValid(null);
+      setDiscount(0);
+      return;
+    }
+
+    const timeout = setTimeout(() => {
+      setCheckingPromo(true);
+      fetch("https://veerutility.ru/promocodes/")
+        .then((res) => res.json())
+        .then((data) => {
+          const promo = data.find(
+            (p: any) =>
+              p.promocode.toLowerCase() === formData.promocode.toLowerCase()
+          );
+          if (promo) {
+            setPromoValid(true);
+            setDiscount(promo.discount_percent);
+          } else {
+            setPromoValid(false);
+            setDiscount(0);
+          }
+        })
+        .catch(() => {
+          setPromoValid(false);
+          setDiscount(0);
+        })
+        .finally(() => setCheckingPromo(false));
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [formData.promocode]);
+
+  const handleChange = (
+    field: keyof typeof formData,
+    value: string
+  ) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,17 +103,16 @@ const DeliveryForm: React.FC<DeliveryFormProps> = ({
       alert("Необходимо согласие с условиями");
       return;
     }
+    if (promoValid === false) {
+      alert("Промокод неверный");
+      return;
+    }
     onConfirm(formData);
   };
 
-  const deliveryOptions = [
-    { value: "CDEK", label: "СДЭК" },
-    {
-      value: "YANDEX",
-      label: "Яндекс Доставка",
-    },
-    { value: "BOXBERY", label: "Boxberry" },
-  ];
+  const finalAmount = discount
+    ? Math.round(totalAmount - (totalAmount * discount) / 100)
+    : totalAmount;
 
   return (
     <div className={styles.modalOverlay}>
@@ -68,40 +121,37 @@ const DeliveryForm: React.FC<DeliveryFormProps> = ({
         <h3 className={styles.formTitle}>Оформление заказа</h3>
 
         <form onSubmit={handleSubmit}>
+          {/* Имя */}
           <div className={styles.formGroup}>
             <input
               type="text"
               placeholder="Ваше ФИО"
               value={formData.name}
-              onChange={(e) =>
-                setFormData({ ...formData, name: e.target.value })
-              }
+              onChange={(e) => handleChange("name", e.target.value)}
               className={styles.formInput}
               required
             />
           </div>
 
+          {/* Email */}
           <div className={styles.formGroup}>
             <input
               type="email"
               placeholder="Email"
               value={formData.email}
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
+              onChange={(e) => handleChange("email", e.target.value)}
               className={styles.formInput}
               required
             />
           </div>
 
+          {/* Телефон */}
           <div className={styles.formGroup}>
             <input
               type="tel"
               placeholder="Телефон"
               value={formData.phone}
-              onChange={(e) =>
-                setFormData({ ...formData, phone: e.target.value })
-              }
+              onChange={(e) => handleChange("phone", e.target.value)}
               className={styles.formInput}
               pattern="[+]{0,1}[0-9\s\-\(\)]+"
               inputMode="tel"
@@ -109,12 +159,11 @@ const DeliveryForm: React.FC<DeliveryFormProps> = ({
             />
           </div>
 
+          {/* Доставка */}
           <div className={styles.formGroup}>
             <select
               value={formData.deliveryMethod}
-              onChange={(e) =>
-                setFormData({ ...formData, deliveryMethod: e.target.value })
-              }
+              onChange={(e) => handleChange("deliveryMethod", e.target.value)}
               className={styles.formInput}
               required
             >
@@ -126,19 +175,44 @@ const DeliveryForm: React.FC<DeliveryFormProps> = ({
             </select>
           </div>
 
+          {/* Адрес */}
           <div className={styles.formGroup}>
             <input
               type="text"
               placeholder="Адрес ближайшего пункта выдачи"
               value={formData.address}
-              onChange={(e) =>
-                setFormData({ ...formData, address: e.target.value })
-              }
+              onChange={(e) => handleChange("address", e.target.value)}
               className={styles.formInput}
               required
             />
           </div>
 
+          {/* Промокод */}
+          <div className={styles.formGroup} style={{ position: "relative" }}>
+            <input
+              type="text"
+              placeholder="Промокод"
+              value={formData.promocode}
+              onChange={(e) => handleChange("promocode", e.target.value)}
+              className={styles.formInput}
+            />
+            {promoValid !== null && !checkingPromo && (
+              <span
+                style={{
+                  position: "absolute",
+                  right: "10px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  fontSize: "22px",
+                  color: promoValid ? "green" : "red",
+                }}
+              >
+                {promoValid ? "✓" : "X"}
+              </span>
+            )}
+          </div>
+
+          {/* Итог */}
           <div className={styles.orderSummary}>
             <h4 className={styles.summaryTitle}>Ваш заказ:</h4>
             {cart.map((item) => (
@@ -153,10 +227,14 @@ const DeliveryForm: React.FC<DeliveryFormProps> = ({
             ))}
             <div className={styles.orderTotal}>
               <strong>Итого:</strong>
-              <strong>{totalAmount} ₽</strong>
+              <strong>
+                {finalAmount} ₽
+                {discount ? ` (-${discount}%)` : ""}
+              </strong>
             </div>
           </div>
 
+          {/* Согласие */}
           <div className={styles.agreement}>
             <input
               type="checkbox"
@@ -173,11 +251,12 @@ const DeliveryForm: React.FC<DeliveryFormProps> = ({
             </label>
           </div>
 
+          {/* Кнопка */}
           <div className={styles.checkoutContainer}>
             <button
               type="submit"
               className={styles.orderButton}
-              disabled={!isChecked}
+              disabled={!isChecked || promoValid === false}
             >
               Подтвердить заказ
             </button>

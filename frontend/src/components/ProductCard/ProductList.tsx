@@ -27,13 +27,20 @@ const ProductList = () => {
             .finally(() => setLoading(false));
     }, []);
 
-    if (loading) return <p>Загрузка товаров...</p>;
-
     return (
         <div className={styles["grid-items"]}>
-            {items.map((item) => (
-                <ProductCard key={item.id} {...item} />
-            ))}
+            {loading
+                ? [...Array(6)].map((_, i) => (
+                    <div key={i} className={styles["product-list__skeleton"]}>
+                        <div className={styles["product-list__skeleton-img"]}></div>
+                        <div className={styles["product-list__skeleton-text"]}></div>
+                        <div className={styles["product-list__skeleton-text"]}></div>
+                        <div className={styles["product-list__skeleton-btn"]}></div>
+                    </div>
+                ))
+                : items.map((item) => (
+                    <ProductCard key={item.id} {...item} />
+                ))}
         </div>
     );
 };
