@@ -88,13 +88,14 @@ const Cart = () => {
     phone: string;
     address: string;
     deliveryMethod: string;
+    finalAmount: string;
   }) => {
     try {
       const response = await axios.post(
         // "https://api.veerrzastore.ru/api/payments/create-payment/",
         "https://veerutility.ru/payment/",
         {
-          amount: totalAmount,
+          finalAmount: formData.finalAmount,
           customer: {
             name: formData.name,
             email: formData.email,
