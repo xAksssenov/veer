@@ -98,7 +98,20 @@ const DeliveryForm: React.FC<DeliveryFormProps> = ({
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   if (!isChecked) {
+  //     alert("Необходимо согласие с условиями");
+  //     return;
+  //   }
+  //   if (promoValid === false) {
+  //     alert("Промокод неверный");
+  //     return;
+  //   }
+  //   onConfirm(formData);
+  // };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isChecked) {
       alert("Необходимо согласие с условиями");
@@ -108,8 +121,38 @@ const DeliveryForm: React.FC<DeliveryFormProps> = ({
       alert("Промокод неверный");
       return;
     }
-    onConfirm(formData);
+  
+    try {
+      const response = await fetch("https://veerutility.ru/payment/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          amount: finalAmount,
+          email: formData.email,
+          description: `Оплата заказа на сумму ${finalAmount} ₽`,
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Ошибка создания платежа");
+      }
+  
+      const data = await response.json();
+  
+      if (data.confirmation && data.confirmation.confirmation_url) {
+        // Перенаправляем пользователя на Юкассу
+        window.location.href = data.confirmation.confirmation_url;
+      } else {
+        alert("Ошибка: не удалось получить ссылку на оплату");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Ошибка при оплате. Попробуйте позже.");
+    }
   };
+  
 
   const finalAmount = discount
     ? Math.round(totalAmount - (totalAmount * discount) / 100)
@@ -254,13 +297,7 @@ const DeliveryForm: React.FC<DeliveryFormProps> = ({
 
           {/* Кнопка */}
           <div className={styles.checkoutContainer}>
-            <button
-              type="submit"
-              className={styles.orderButton}
-              disabled={!isChecked || promoValid === false}
-            >
-              Подтвердить заказ
-            </button>
+            <button type="submit" className={styles.orderButton} disabled={!isChecked || promoValid === false}>Подтвердить заказ</button>
           </div>
         </form>
       </div>
