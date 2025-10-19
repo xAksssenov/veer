@@ -66,6 +66,7 @@ const DeliveryForm: React.FC<DeliveryFormProps> = ({
     const timeout = setTimeout(() => {
       setCheckingPromo(true);
       fetch("https://veerutility.ru/promocodes/")
+      // fetch("http://127.0.0.1:8000/promocodes/")
         .then((res) => res.json())
         .then((data) => {
           const promo = data.find(

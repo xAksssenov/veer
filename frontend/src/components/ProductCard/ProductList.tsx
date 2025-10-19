@@ -9,6 +9,7 @@ const ProductList = () => {
 
     useEffect(() => {
         fetch("https://veerutility.ru/items/")
+        // fetch("http://127.0.0.1:8000/items/")
             .then((res) => res.json())
             .then((data) => {
                 const processed = data.map((item: any) => ({

@@ -13,6 +13,7 @@ const Footer = () => {
         <div className={styles.sellersInfo}>
           <p>Верещагин Михаил Васильевич - ИНН: 301611373729</p>
           <p>Рзазаде Магаммед Вугар оглы - ИНН: 301515975576</p>
+          <p>Кувшинников Никита Владимирович - ИНН: 730996708699</p>
           <div className={styles.sellersInfo__links}>
             <a
               href="https://t.me/mveerm"
