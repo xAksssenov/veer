@@ -25,6 +25,7 @@ interface DeliveryFormProps {
     address: string;
     deliveryMethod: string;
     promocode?: string;
+    finalAmount: number;
   }) => void;
   onClose: () => void;
 }
@@ -108,7 +109,11 @@ const DeliveryForm: React.FC<DeliveryFormProps> = ({
       alert("Промокод неверный");
       return;
     }
-    onConfirm(formData);
+    onConfirm({
+      ...formData,
+      promocode: formData.promocode,
+      finalAmount: finalAmount, // передаём сумму с учётом скидки
+    });
     // Payment();
   };
 
