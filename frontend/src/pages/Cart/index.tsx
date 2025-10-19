@@ -91,7 +91,8 @@ const Cart = () => {
   }) => {
     try {
       const response = await axios.post(
-        "https://api.veerrzastore.ru/api/payments/create-payment/",
+        // "https://api.veerrzastore.ru/api/payments/create-payment/",
+        "https://veerutility.ru/payment/",
         {
           amount: totalAmount,
           customer: {
