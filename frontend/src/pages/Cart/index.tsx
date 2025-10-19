@@ -88,43 +88,53 @@ const Cart = () => {
     phone: string;
     address: string;
     deliveryMethod: string;
-    finalAmount: string;
+    finalAmount: string | number;
   }) => {
     try {
-      const response = await axios.post(
-        // "https://api.veerrzastore.ru/api/payments/create-payment/",
-        "https://veerutility.ru/payment/",
-        {
-          finalAmount: formData.finalAmount,
-          customer: {
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone,
-            address: formData.address,
-          },
-          items: cartWithProductData.map((item) => ({
-            id: item.id,
-            title: item.card?.title,
-            quantity: item.quantity,
-            price: item.card?.price,
-          })),
-          delivery_method: formData.deliveryMethod,
+      // Преобразуем finalAmount в строку с двумя знаками после точки
+      const finalAmountStr = Number(formData.finalAmount).toFixed(2);
+  
+      // Формируем массив items, заменяем undefined значениями по умолчанию
+      const itemsPayload = cartWithProductData.map((item) => ({
+        id: item.id,
+        title: item.card?.title || "Без названия",
+        quantity: item.quantity || 1,
+        price: item.card?.price || 0,
+      }));
+  
+      // Сборка полного payload
+      const payload = {
+        finalAmount: finalAmountStr,
+        customer: {
+          name: formData.name || "Не указано",
+          email: formData.email || "noemail@example.com",
+          phone: formData.phone || "+00000000000",
+          address: formData.address || "Не указан",
         },
-        {
-          withCredentials: true,
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-
+        items: itemsPayload,
+        delivery_method: formData.deliveryMethod || "Самовывоз",
+      };
+  
+      console.log("Payload to server:", payload);
+  
+      const response = await axios.post("https://veerutility.ru/payment/", payload, {
+        withCredentials: true,
+        headers: { "Content-Type": "application/json" },
+      });
+  
       if (response.status === 200) {
+        // Очистка корзины и редирект на страницу оплаты
         dispatch(clearCart());
         localStorage.setItem("currentPayment", response.data.payment_id);
         window.location.href = response.data.confirmation_url;
+      } else {
+        console.error("Не удалось создать платеж, статус:", response.status);
       }
     } catch (error) {
-      console.error("Ошибка при создании платежа", error);
+      console.error("Ошибка при создании платежа:", error);
     }
   };
+  
 
   const SKELETON_COUNT = 3;
 
