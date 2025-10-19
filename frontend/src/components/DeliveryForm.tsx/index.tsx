@@ -25,7 +25,7 @@ interface DeliveryFormProps {
     address: string;
     deliveryMethod: string;
     promocode?: string;
-    finalAmount: number;
+    finalAmount: string;
   }) => void;
   onClose: () => void;
 }
@@ -112,7 +112,7 @@ const DeliveryForm: React.FC<DeliveryFormProps> = ({
     onConfirm({
       ...formData,
       promocode: formData.promocode,
-      finalAmount: finalAmount, // передаём сумму с учётом скидки
+      finalAmount: finalAmountStr, // передаём сумму с учётом скидки
     });
     // Payment();
   };
@@ -153,6 +153,8 @@ const DeliveryForm: React.FC<DeliveryFormProps> = ({
   const finalAmount = discount
     ? Math.round(totalAmount - (totalAmount * discount) / 100)
     : totalAmount;
+
+  const finalAmountStr = finalAmount.toFixed(2); // "123.00"
 
   return (
     <div className={styles.modalOverlay}>
