@@ -1,0 +1,79 @@
+.succes-payment {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-align: center;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
+  
+  .sticker-container {
+    position: relative;
+    margin-bottom: 28px;
+  }
+  
+  .sticker-image {
+    width: 220px;
+    height: auto;
+    display: block;
+    border-radius: 20px;
+    padding: 12px;
+  }
+  
+  .sticker-necklace {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 25px;
+    width: 90px;
+    pointer-events: none;
+    opacity: 0.95;
+  }
+  
+  .sticker-earring {
+    position: absolute;
+    right: 22%;
+    top: 20%;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+  
+  .spark1 {
+    position: absolute;
+    left: 8%;
+    top: 10%;
+    width: 12px;
+    height: 12px;
+    pointer-events: none;
+  }
+  
+  .spark2 {
+    position: absolute;
+    right: 6%;
+    top: 6%;
+    width: 10px;
+    height: 10px;
+    pointer-events: none;
+  }
+  
+  .success-title {
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: black;
+  }
+  
+  .success-text {
+    max-width: 520px;
+    opacity: 0.85;
+    line-height: 1.5;
+    font-size: 17px;
+  }
+  
