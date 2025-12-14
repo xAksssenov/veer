@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { addItemToCart } from "../../store/cartSlice";
 import axios from "axios";
 
-const API_BASE = "https://veerutility.ru";
+const API_BASE = "https://api.veerutility.ru";
 
 interface CardType {
   id: number;

@@ -25,7 +25,7 @@ interface Product {
   images: string[];
 }
 
-const API_BASE = "https://veerutility.ru";
+const API_BASE = "https://api.veerutility.ru";
 
 const Cart = () => {
   const cart = useSelector(selectCart);
@@ -117,7 +117,7 @@ const Cart = () => {
   
       console.log("Payload to server:", payload);
   
-      const response = await axios.post("https://veerutility.ru/payment/", payload, {
+      const response = await axios.post("https://api.veerutility.ru/payment/", payload, {
         withCredentials: true,
         headers: { "Content-Type": "application/json" },
       });

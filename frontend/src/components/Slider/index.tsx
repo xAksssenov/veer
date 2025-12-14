@@ -11,7 +11,7 @@ const ImageSlider = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("https://veerutility.ru/slider-images/")
+    fetch("https://api.veerutility.ru/slider-images/")
     // fetch("http://127.0.0.1:8000/slider-images/")
       .then((res) => res.json())
       .then((data) => {
