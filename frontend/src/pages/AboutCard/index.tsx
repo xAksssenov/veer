@@ -90,7 +90,7 @@ const AboutCard = () => {
               {card.image?.map((img, index) => (
                 <img
                   key={index}
-                  src={img}
+                  src={`https://api.veerutility.ru/${img}`}
                   alt={`Thumbnail ${index}`}
                   className={`${styles.thumbnail} ${
                     selectedImage === img ? styles.thumbnail__active : ""

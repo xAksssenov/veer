@@ -63,7 +63,7 @@ const ImageSlider = () => {
             {images.map((src, index) => (
               <div key={index} className={styles.slide}>
                 <img
-                  src={src}
+                  src={`https://api.veerutility.ru/${src}`}
                   alt={`Slide ${index + 1}`}
                   className={styles.image}
                   loading="lazy"
