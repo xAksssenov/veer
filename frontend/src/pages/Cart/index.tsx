@@ -180,7 +180,7 @@ const Cart = () => {
                 <Link to={`/card/${item.id}`} className={styles.product__section}>
                   <img
                     className={styles.product__image}
-                    src={imageUrl}
+                    src={`https://api.veerutility.ru/${imageUrl}`}
                     alt={item.card.title || "Товар"}
                   />
                   <div className={styles.product__group}>

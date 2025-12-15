@@ -102,7 +102,7 @@ const AboutCard = () => {
             </div>
             <img
               className={styles.gallery__img}
-              src={selectedImage || card.image?.[0]}
+              src={`https://api.veerutility.ru/${selectedImage || card.image?.[0]}`}
               alt={card.title}
               onClick={toggleFullscreen}
               loading="eager"
@@ -171,7 +171,7 @@ const AboutCard = () => {
         <div className={styles.fullscreen} onClick={toggleFullscreen}>
           <img
             className={styles.fullscreen__img}
-            src={selectedImage || card?.image?.[0]}
+            src={`https://api.veerutility.ru/${selectedImage || card?.image?.[0]}`}
             alt={card?.title}
           />
         </div>
