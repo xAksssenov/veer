@@ -1,0 +1,15 @@
+
+> frontend@0.0.0 dev
+> vite --port 8082
+
+
+  VITE v6.4.1  ready in 512 ms
+
+  ➜  Local:   http://localhost:8082/
+  ➜  Network: http://192.168.1.137:8082/
+The request url "/proc/self/environ" is outside of Vite serving allow list.
+
+- /home/nikitakuvsh-server/Desktop/veer/frontend
+
+Refer to docs https://vite.dev/config/server-options.html#server-fs-allow for configurations and more details.
+
