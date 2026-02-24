@@ -1,0 +1,41 @@
+.check-mark {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.check-mark svg {
+    width: 100%;
+    height: 100%;
+}
+
+.checkmark-circle {
+    stroke: #fff;       /* белый цвет круга */
+    stroke-width: 4;
+    stroke-dasharray: 157; /* окружность: 2*π*r ≈ 2*3.14*25 */
+    stroke-dashoffset: 157;
+    animation: draw-circle 0.5s ease-out forwards;
+}
+
+.checkmark-check {
+    stroke: #fff;       /* цвет галочки */
+    stroke-width: 4;
+    stroke-dasharray: 36; /* длина линии галочки примерно */
+    stroke-dashoffset: 36;
+    animation: draw-check 0.5s 0.5s ease-out forwards;
+}
+
+@keyframes draw-circle {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes draw-check {
+    to {
+        stroke-dashoffset: 0;
+    }
+}

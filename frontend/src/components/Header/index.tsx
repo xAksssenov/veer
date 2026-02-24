@@ -41,6 +41,9 @@ const Header = () => {
         </Link>
 
         <div className={styles.header__nav}>
+          <Link to="/orders" className={styles.header__button}>
+            Мои заказы
+          </Link>
           <Link to="/gallery" className={styles.header__button}>
             Галерея
           </Link>
@@ -60,6 +63,9 @@ const Header = () => {
         <div className={styles.popup} onClick={togglePopup}>
           <div className={styles.popup__content}>
             <nav className={styles.popup__nav}>
+              <Link to="/orders" className={styles.header__button}>
+                Мои заказы
+              </Link>
               <Link to="/gallery" className={styles.header__button}>
                 Галерея
               </Link>

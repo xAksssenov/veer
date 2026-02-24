@@ -1,0 +1,93 @@
+.order-status {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.order-attention {
+    align-self: flex-end;
+    font-size: 32px;
+    border: 1px solid black;
+    border-radius: 50%;
+    padding-left: 20px;
+    padding-right: 20px;
+    user-select: none;
+    --webkit-user-select: none;
+    transition: all 0.25s ease-in-out;
+    cursor: pointer;
+}
+
+.order-attention:hover {
+    color: white;
+    background: black
+}
+
+.status-sticker {
+    max-height: 230px !important;
+    display: flex;
+    justify-content: center;
+}
+
+.status-text {
+    font-size: 32px;
+}
+
+.status-processing .status-text {
+    color: #ed825b;
+}
+
+.status-accepted .status-text {
+    color: rgb(23, 158, 23);
+}
+
+.status-order-key {
+    font-size: 12px;
+    color: #3a3a3ae6;
+}
+
+.details-button {
+    padding: 10px 20px;
+    background: transparent;
+    color: black;
+    border: 1px solid black;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.25s ease-in-out;
+}
+
+.details-button:hover {
+    color: #fff;
+    background: black;
+}
+
+.modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #1c1c1c;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 600px;
+    width: 90%;
+    position: relative;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px; right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #fff;
+    cursor: pointer;
+}

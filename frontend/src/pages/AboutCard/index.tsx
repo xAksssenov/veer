@@ -6,8 +6,10 @@ import SuccessfullyAdded from "../../components/SuccessfullyAdded";
 import { useDispatch } from "react-redux";
 import { addItemToCart } from "../../store/cartSlice";
 import axios from "axios";
+import SizesModal from './SizesModal';
 
-const API_BASE = "https://api.veerutility.ru";
+// const API_BASE = "https://api.veerutility.ru";
+const API_BASE = "http://127.0.0.1:8080";
 
 interface CardType {
   id: number;
@@ -26,6 +28,8 @@ const AboutCard = () => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isAddedCart, setIsAddedCart] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [sizesModalVisible, setSizesModalVisible] = useState(false);
+  const [fingerSizes, setFingerSizes] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -33,6 +37,7 @@ const AboutCard = () => {
     try {
       const response = await axios.get(`${API_BASE}/items/item/${id}`);
       const data = response.data;
+      setFingerSizes(data.finger_sizes);
       const cardWithImage = { ...data, image: data.images }; // адаптируем для фронта
       setCard(cardWithImage);
       setSelectedImage(data.images[0]);
@@ -59,6 +64,7 @@ const AboutCard = () => {
 
   const handleAddToCart = () => {
     if (!card) return;
+    setSizesModalVisible(false);
 
     dispatch(addItemToCart({ id: card.id }));
     setIsAddedCart(true);
@@ -90,7 +96,8 @@ const AboutCard = () => {
               {card.image?.map((img, index) => (
                 <img
                   key={index}
-                  src={`https://api.veerutility.ru/${img}`}
+                  // src={`https://api.veerutility.ru/${img}`}
+                  src={`http://127.0.0.1:8080s/${img}`}
                   alt={`Thumbnail ${index}`}
                   className={`${styles.thumbnail} ${
                     selectedImage === img ? styles.thumbnail__active : ""
@@ -102,7 +109,8 @@ const AboutCard = () => {
             </div>
             <img
               className={styles.gallery__img}
-              src={`https://api.veerutility.ru/${selectedImage || card.image?.[0]}`}
+              // src={`https://api.veerutility.ru/${selectedImage || card.image?.[0]}`}
+              src={`http://127.0.0.1:8080/${selectedImage || card.image?.[0]}`}
               alt={card.title}
               onClick={toggleFullscreen}
               loading="eager"
@@ -118,12 +126,7 @@ const AboutCard = () => {
             <p className={styles.details__description}>{card.description}</p>
 
             <div className={styles.buttons}>
-              <button
-                onClick={handleAddToCart}
-                className={styles.buttons__cart}
-              >
-                Добавить в корзину
-              </button>
+              <button onClick={() => setSizesModalVisible(true)} className={styles.buttons__cart}>Добавить в корзину</button>
             </div>
 
             <div className={styles.additional}>
@@ -171,10 +174,15 @@ const AboutCard = () => {
         <div className={styles.fullscreen} onClick={toggleFullscreen}>
           <img
             className={styles.fullscreen__img}
-            src={`https://api.veerutility.ru/${selectedImage || card?.image?.[0]}`}
+            // src={`https://api.veerutility.ru/${selectedImage || card?.image?.[0]}`}
+            src={`http://127.0.0.1:8080/${selectedImage || card?.image?.[0]}`}
             alt={card?.title}
           />
         </div>
+      )}
+
+      {sizesModalVisible && (
+        <SizesModal id={id} onClose={() => setSizesModalVisible(false)} onAccept = {handleAddToCart} sizesArray={fingerSizes} />
       )}
     </div>
   );

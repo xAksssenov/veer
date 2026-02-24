@@ -1,0 +1,75 @@
+.orders {
+    padding: 24px 0;
+}
+
+.orders__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+/* Заказ целиком */
+.orders__order {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border: 1px solid black;
+    padding: 20px;
+    border-radius: 20px;
+    transition: all 0.25s ease-in-out;
+}
+
+.orders__order:hover {
+    transform: scale(1.005)
+}
+
+/* Шапка заказа */
+.orders__order-header {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: 16px;
+    font-size: 14px;
+    color: #888;
+}
+
+.orders__order-total {
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    vertical-align: ce
+    ;
+}
+
+/* Товары */
+.orders__items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 24px;
+}
+
+/* Товар */
+.orders__card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.orders__card-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+/* Текст */
+.orders__card-title {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.3;
+    margin: 0;
+}
+
+.orders__card-price {
+    font-size: 13px;
+    color: #555;
+}

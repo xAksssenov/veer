@@ -25,7 +25,8 @@ const ProductCard = (props: Card) => {
         <Link to={`/card/${props.id}`} key={props.id} className={styles.link}>
           <img
             className={styles.link__img}
-            src={`https://api.veerutility.ru/${props.image[0]}`}
+            // src={`https://api.veerutility.ru/${props.image[0]}`}
+            src={`http://127.0.0.1:8080/${props.image[0]}`}
             alt={`photo_${props.id}`}
             loading="lazy"
           />

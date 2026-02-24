@@ -7,6 +7,8 @@ import {
   MainRoute,
   TermsRoute,
   SuccesPayment,
+  CheckOrders,
+  CheckOrder
 } from "./config";
 import Home from "../pages/Home";
 import Cart from "../pages/Cart";
@@ -15,6 +17,9 @@ import MainLayout from "../layout/MainLayout";
 import Gallery from "../pages/Galery";
 import Terms from "../pages/Terms";
 import SuccesPaymentComponent from "../components/SuccesPayment/SuccesPayment";
+import CheckOrdersComponent from "../components/CheckOrders/CheckOrders";
+// import CheckOrderComponent from "../components/Order/Order";
+import OrderStatus from "../components/OrderStatus/OrderStatus";
 
 const Router = () => {
   const basedPath: RouteObject[] = [
@@ -27,7 +32,9 @@ const Router = () => {
         { path: CartRoute, element: <Cart /> },
         { path: GaleryRoute, element: <Gallery /> },
         { path: CardRoute, element: <AboutCard /> },
-        { path: SuccesPayment, element: <SuccesPaymentComponent /> }
+        { path: SuccesPayment, element: <SuccesPaymentComponent /> },
+        { path: CheckOrders, element: <CheckOrdersComponent /> },
+        { path: CheckOrder, element: <OrderStatus /> }
       ],
     },
   ];

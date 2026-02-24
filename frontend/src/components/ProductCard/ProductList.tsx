@@ -8,8 +8,8 @@ const ProductList = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("https://api.veerutility.ru/items/")
-        // fetch("http://127.0.0.1:8000/items/")
+        // fetch("https://api.veerutility.ru/items/")
+        fetch("http://127.0.0.1:8080/items/")
             .then((res) => res.json())
             .then((data) => {
                 const processed = data.map((item: any) => ({
